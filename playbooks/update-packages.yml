@@ -1,0 +1,7 @@
+# Update package manager playbook
+---
+  - hosts: backend:frontend
+    become: True
+    tasks:
+      - name: Update package manager
+        apt: name=* state=latest

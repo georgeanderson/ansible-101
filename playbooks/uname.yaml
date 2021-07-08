@@ -1,0 +1,7 @@
+# Uname Playbook
+---
+  - hosts: all
+    tasks:
+      - name: Get the host OS
+        shell: uname -a
+        changed_when: False

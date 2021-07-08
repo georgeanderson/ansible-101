@@ -1,0 +1,6 @@
+# Congregated playbook to deply Apache webserver
+---
+  - import_playbook: update-packages.yml
+  - import_playbook: install-apache.yml
+  - import_playbook: git-checkout.yml
+  - import_playbook: start-apache.yml

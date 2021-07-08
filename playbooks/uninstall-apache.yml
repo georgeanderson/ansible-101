@@ -1,0 +1,6 @@
+# Remove Apache webserver
+---
+  - hosts: local
+    tasks:
+      - name: Uninstall Apache
+        apt: name=apache2 state=absent

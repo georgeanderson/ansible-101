@@ -1,0 +1,42 @@
+# Backend provisioning playbook
+---
+  - hosts: backend
+    vars:
+      file_path: "/var/www/html/index.html"
+      file_msg: "Hello from {{ ansible_hostname }}"
+    become: True
+    tasks:
+      - name: Update package manager
+        apt: name=* state=latest
+      - name: Install Apache server
+        apt: name=apache2 state=present
+      - name: Delete index.html file
+        file: path="{{ file_path }}" state=absent
+      - name: Create new index.hml file
+        lineinfile:
+          create: yes
+          path: "{{ file_path }}"
+          line: "<html><head><title>Hello World</title></head><body><h1>{{ file_msg }}</h1></body></html>"
+        notify: start apache
+    handlers:
+      - name: start apache
+        service: name=apache2 state=started
+
+  - hosts: frontend
+    become: True
+    tasks:
+      - name: Update package manager
+        apt: name=* state=latest
+      - name: Install Apache server
+        apt: name=apache2 state=present
+      - name: Delete index.html file
+        file: path=/var/www/html/index.html state=absent
+      - name: Create new index.hml file
+        lineinfile:
+          create: yes
+          path: /var/www/html/index.html
+          line: <html><head><title>Hello World</title></head><body><h1>Hello from Server2</h1></body></html>
+        notify: start apache
+    handlers:
+      - name: start apache
+        service: name=apache2 state=started

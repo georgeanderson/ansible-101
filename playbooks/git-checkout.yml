@@ -1,0 +1,14 @@
+# Checkout repository from Github
+---
+  - hosts: backend:frontend
+    become: True
+    tasks:
+      - name: Git checkout
+        git:
+          repo: 'https://github.com/georgeanderson/georgeanderson.github.io.git'
+          dest: /tmp/www/
+      - name: Copy index.html
+        copy: 
+          src: /tmp/www/index.html
+          dest: /var/www/html/index.html
+          remote_src: yes
