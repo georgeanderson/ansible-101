@@ -1,0 +1,17 @@
+---
+# tasks file for roles/challenge5
+- name: update all packages with yum
+  yum: name=* state=latest
+
+- name: install apache webserver
+  yum: name=apache2 state=present
+
+- name: delete old index.html file
+  file: path={{ filepath }} state=absent
+
+- name: create a simple html file
+  lineinfile:
+    create: yes
+    path: "{{ filepath }}"
+    line: <html>{{ message }}</html>
+  notify: start apache

@@ -1,0 +1,4 @@
+---
+# vars file for roles/webservers
+file_path: "/var/www/html/index.html"
+file_msg: "Hello from {{ ansible_hostname }}"

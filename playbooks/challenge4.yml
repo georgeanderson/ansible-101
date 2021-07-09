@@ -1,0 +1,48 @@
+# Challenge 4
+
+#Task 1:
+#
+#1. Write an Ansible playbook that loads the data from the provided files. The files contain two lists of servers. The first list is in a simple variables file that contains a simple list of addresses. The second file is a CSV file that contains a spreadsheet.
+#
+#2. Parse / load the data from the files as needed.
+#
+#3. Write a loop that displays the addresses of the servers from the variables file to the console in the format:
+#
+#server1: 1111.1111.1111.1111
+#
+#server2: 2222.2222.2222.2222
+#
+#4. Write another loop that displays the address of each server in the CSV file along with their corresponding index in the format:
+#
+#1: 1111.1111.1111.1111
+#
+#2: 2222.2222.2222.2222
+#
+#Task 2: Artifact Submission
+#
+#Submit your Ansible playbook that successfully accomplishes the goal.
+---
+  - hosts: local
+    vars_files:
+      - ./data/addresses.yml
+    vars:
+      csv_file: ./data/assignment_hosts.csv
+    tasks:
+      - name: Display list of addresses v1
+        debug:
+          msg: "Server{{ ansible_loop.index }}: {{ item }}"
+        loop: "{{ addresses }}"
+        loop_control:
+          extended: yes
+      - name: Load contents of CSV file
+        read_csv:
+          path: "{{ csv_file }}"
+          delimiter: ","
+        register: servers
+      - name: Display contents of CSV file
+        debug:
+          msg: "{{ server_idx }}: {{ server.ip }}"
+        loop: "{{ servers.list }}"
+        loop_control:
+          loop_var: server
+          index_var: server_idx

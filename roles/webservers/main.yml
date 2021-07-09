@@ -1,0 +1,6 @@
+# Role entry point playbook
+---
+  - hosts: backend:frontend
+    become: true
+    roles:
+      - role: ../webservers
