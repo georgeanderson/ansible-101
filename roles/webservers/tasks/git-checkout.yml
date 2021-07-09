@@ -1,0 +1,19 @@
+- name: Cleanup repo
+  file:
+    path: "{{ git_dest }}"
+    state: absent
+- name: Git checkout
+  git:
+    repo: "{{ git_repo }}"
+    dest: "{{ git_dest }}"
+- name: Copy index.html
+  copy: 
+    src: "{{ git_dest}}/playbooks/data/index.html"
+    dest: "{{ file_path }}"
+    remote_src: yes
+- name: Replace Host Address
+  replace:
+    path: "{{ file_path }}"
+    regexp: "HOSTADDRESS"
+    replace: "{{ ansible_hostname }}"
+  notify: start apache

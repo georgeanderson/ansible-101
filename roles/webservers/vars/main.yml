@@ -1,4 +1,5 @@
 ---
 # vars file for roles/webservers
 file_path: "/var/www/html/index.html"
-file_msg: "Hello from {{ ansible_hostname }}"
+git_repo: "https://github.com/georgeanderson/ansible-101.git"
+git_dest: "/tmp/www"

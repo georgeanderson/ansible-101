@@ -1,0 +1,5 @@
+---
+# vars file for roles/webcheck
+web_endpoint: "http://{{ ansible_host }}"
+hello_page: "{{ lookup('url', web_endpoint) }}"
+log_entry: "{{ ansible_hostname }}: {{ ansible_host }} - {{ ansible_date_time.date }}:{{ ansible_date_time.time}}"

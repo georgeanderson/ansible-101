@@ -7,8 +7,4 @@
 - name: Delete index.html file
   file: path="{{ file_path }}" state=absent
 - name: Create new index.hml file
-  lineinfile:
-    create: yes
-    path: "{{ file_path }}"
-    line: "<html><head><title>Hello World</title></head><body><h1>{{ file_msg }}</h1></body></html>"
-  notify: start apache
+  import_tasks: git-checkout.yml

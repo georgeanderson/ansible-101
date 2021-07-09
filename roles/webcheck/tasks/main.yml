@@ -1,0 +1,15 @@
+---
+# tasks file for roles/webcheck
+- name: Health Check
+  debug:
+    msg: "{{ log_entry }}"
+  register: working
+  when: hello_page.find('WORKING') != -1
+- name: Write log
+  lineinfile:
+    create: yes
+    insertafter: EOF
+    line: "{{ log_entry }}"
+    path: ../logs/webcheck.log
+  delegate_to: localhost
+  when: working is succeeded
